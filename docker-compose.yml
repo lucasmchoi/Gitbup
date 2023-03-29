@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  gitbup:
+    image: ghcr.io/lucasmchoi/gitbup:latest
+    container_name: gitbup
+    restart: always
+    volumes:
+      - /Docker/config:/gitbup/config
+      - /Docker/repos:/gitbup/repos

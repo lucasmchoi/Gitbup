@@ -1,0 +1,16 @@
+repo-1:
+  service: gitlab
+  baseurl: gitlab.com
+  repourl: username/example-1
+  reponame: example-1
+  username: username
+  credential: example-credential-1
+  schedule: "5 * * * *"
+repo-2:
+  service: gitlab
+  baseurl: gitlab.com
+  repourl: username/example-2
+  reponame: example-2
+  username: username
+  credential: example-credential-2
+  schedule: "10 * * * *"
