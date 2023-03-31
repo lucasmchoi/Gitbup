@@ -27,6 +27,7 @@ repo-1:
   username: username
   credential: example-credential-1
   schedule: "5 * * * *"
+  hcheckurl: https://hc-ping.com/...
 ```
 
 ## Caveats
