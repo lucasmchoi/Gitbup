@@ -9,24 +9,24 @@ You have to define the baseurl of the used git service (e.g. ```gitlab.com```). 
 ```yaml
 version: '3.3'
 services:
-	gitbup:
-		image: ghcr.io/lucasmchoi/gitbup:latest
-		container_name: gitbup
-		restart: always
-		volumes:
-			- /Docker/config:/gitbup/config
-			- /Docker/repos:/gitbup/repos
+  gitbup:
+    image: ghcr.io/lucasmchoi/gitbup:latest
+    container_name: gitbup
+    restart: always
+    volumes:
+      - /Docker/config:/gitbup/config
+      - /Docker/repos:/gitbup/repos
 ```
 
 ```yaml
 repo-1:
-	service: gitlab
-	baseurl: gitlab.com
-	repourl: username/example-1
-	reponame: example-1
-	username: username
-	credential: example-credential-1
-	schedule: "5 * * * *"
+  service: gitlab
+  baseurl: gitlab.com
+  repourl: username/example-1
+  reponame: example-1
+  username: username
+  credential: example-credential-1
+  schedule: "5 * * * *"
 ```
 
 ## Caveats
