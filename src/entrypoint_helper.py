@@ -15,6 +15,7 @@ for repo in configl.keys():
         gitusername = configl[repo]['username']
         gitcredential = configl[repo]['credential']
         cronschedule = configl[repo]['schedule']
+        healthcheckurl = configl[repo]['hcheckurl']
         # set url for gitlab
         gitcloneurl = 'https://gitbup:{}@{}/{}.git'.format(gitcredential,gitserviceurl,gitrepourl)
 
@@ -33,7 +34,7 @@ for repo in configl.keys():
         if '/gitbup/repos/{}'.format(gitreponame) in cronc:
             print('Repo {} git pull --all already in cronfile'.format(gitreponame))
         else:
-            subprocess.run(['''echo "{} sh -c 'cd /gitbup/repos/{} && git pull --all'" >> /var/spool/cron/crontabs/root'''.format(cronschedule, gitreponame)], shell=True) # 
+            subprocess.run(['''echo "{} sh -c 'cd /gitbup/repos/{} && git pull --all'" >> /var/spool/cron/crontabs/root && curl -fsS -m 10 --retry 5 -o /dev/null {}'''.format(cronschedule, gitreponame, healthcheckurl)], shell=True) # 
             print('Repo {} git pull --all added in cronfile'.format(gitreponame))
     else:
         print('{} not yet supported'.format(configl[repo]['service']))
