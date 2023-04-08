@@ -45,7 +45,7 @@ for repo in configl.keys():
             with open('/gitbup/cronhelpers/{}.sh'.format(repo), 'w') as writer:
                 writer.write(helpersh)
 
-            subprocess.run(['echo ''"''{} sh /gitbup/{}.sh''"'' >> /var/spool/cron/crontabs/root'.format(cronschedule, repo)], shell=True) # 
+            subprocess.run(['echo ''"''{} sh /gitbup/cronhelpers/{}.sh''"'' >> /var/spool/cron/crontabs/root'.format(cronschedule, repo)], shell=True) # 
 
             print('Repo {} git pull --all added in cronfile'.format(gitreponame))
     else:
