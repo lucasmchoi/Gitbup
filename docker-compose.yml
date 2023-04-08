@@ -5,5 +5,5 @@ services:
     container_name: gitbup
     restart: always
     volumes:
-      - /Docker/config:/gitbup/config
-      - /Docker/repos:/gitbup/repos
+      - ~/Docker/config:/gitbup/config
+      - ~/Docker/repos:/gitbup/repos
