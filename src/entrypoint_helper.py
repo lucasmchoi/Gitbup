@@ -34,7 +34,19 @@ for repo in configl.keys():
         if '/gitbup/repos/{}'.format(gitreponame) in cronc:
             print('Repo {} git pull --all already in cronfile'.format(gitreponame))
         else:
-            subprocess.run(['''echo "{} sh -c 'curl -fsS -m 10 --retry 5 -o /dev/null {}/start; cd /gitbup/repos/{}; m=\$(git pull --all 2>&1); curl -fsS -m 10 --retry 5 --data-raw \$m {}/\$?'" >> /var/spool/cron/crontabs/root'''.format(cronschedule, healthcheckurl, gitreponame, healthcheckurl)], shell=True) # 
+            helpersh = "#!/bin/bash\n"
+            helpersh += "healthcheckurl='{}'\n".format(healthcheckurl)
+            helpersh += "gitreponame='{}'\n".format(gitreponame)
+            helpersh += "curl -fsS -m 10 --retry 5 -o /dev/null $healthcheckurl/start\n"
+            helpersh += "cd /gitbup/repos/$gitreponame\n"
+            helpersh += "m=$(git pull --all 2>&1)\n"
+            helpersh += "curl -fsS -m 10 --retry 5 --data-raw \"$(echo \"$m\" | tail -c 100000)\" $healthcheckurl/$?\n"
+            helpersh += "unset healthcheckurl; unset gitreponame"
+            with open('/gitbup/cronhelpers/{}.sh'.format(repo), 'w') as writer:
+                writer.write(helpersh)
+
+            subprocess.run(['echo ''"''{} sh /gitbup/{}.sh''"'' >> /var/spool/cron/crontabs/root'.format(cronschedule, repo)], shell=True) # 
+
             print('Repo {} git pull --all added in cronfile'.format(gitreponame))
     else:
         print('{} not yet supported'.format(configl[repo]['service']))
