@@ -31,7 +31,7 @@ for repo in configl.keys():
             cronc = cronf.read()
         
         # check if cron for regular pulling exists alreay in cronfile
-        if '/gitbup/repos/{}'.format(repo) in cronc:
+        if '/gitbup/cronhelpers/{}'.format(repo) in cronc:
             print('Repo {} git pull --all already in cronfile'.format(repo))
         else:
             helpersh = "#!/bin/bash\n"
